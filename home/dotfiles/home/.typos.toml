@@ -1,0 +1,9 @@
+[default.extend-words]
+noice = "noice"
+windo = "windo"
+enew = "enew"
+tabe = 'tabe'
+SIE = "SIE"
+
+[files]
+extend-exclude = ["*.md"]

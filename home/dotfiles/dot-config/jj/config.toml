@@ -1,0 +1,39 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[user]
+name = "Melker Ulander"
+email = "melker.ulander@pm.me"
+
+[ui]
+diff-formatter = "delta"
+pager = ["delta", "--pager", "less"] # Hide output when quitting pager
+default-command = "log"
+merge-editor = "diffconflicts"
+diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
+
+[templates]
+draft_commit_description = '''
+concat(
+  builtin_draft_commit_description,
+  "\nJJ: ignore-rest\n",
+  diff.git(),
+)
+'''
+
+[merge-tools]
+# Fixes `tool exited with exit status: 1` warning
+delta.diff-expected-exit-codes = [0, 1]
+
+[merge-tools.diffconflicts]
+program = "nvim"
+merge-args = [
+  "-c",
+  "let g:jj_diffconflicts_marker_length=$marker_length",
+  "-c",
+  "JJDiffConflicts",
+  "$output",
+  "$base",
+  "$left",
+  "$right",
+]
+merge-tool-edits-conflict-markers = true
