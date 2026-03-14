@@ -8,15 +8,28 @@
       target = "xdg-desktop-portal-hyprland.service";
     };
     settings = {
-      # paths.wallpaperDir = "~/Images";
+      paths = {
+	wallpaperDir = "~/Pictures/gruvWall";
+	#mediaGif = ".gif";
+	#sessionGif = ".gif";
+      };
       appearance = {
         anim = { durations = { scale = 0.7; }; };
         padding = { scale = 0.5; };
         transparency = {
-          enabled = true;
+          enabled = false;
           base = 0.6;
           layers = 0.4;
         };
+	font = {
+	  family = {
+	    material = "Material Symbols Rounded";
+	  };
+          size = { scale = 1; };
+	};
+      };
+      services = {
+	smartScheme = true;
       };
       general = {
         apps = {
@@ -110,5 +123,13 @@
     libsForQt5.qt5ct
     nerd-fonts.jetbrains-mono
     pavucontrol
+    #for night light toggle
+    ddcutil
+    # icons
+    material-symbols
+    # selecting an area
+    slurp
+    # algorithm to generate color scheme
+    python312Packages.materialyoucolor
   ];
 }

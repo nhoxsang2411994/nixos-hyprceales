@@ -7,6 +7,7 @@
 {
   imports = [
     ./hyprland.nix
+    ./colorshell.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -31,8 +32,8 @@
 
   # Services
   services = {
-    upower.enable = true; # Required by Caelestia
-    power-profiles-daemon.enable = true;
+    #upower.enable = true; # Required by Caelestia
+    #power-profiles-daemon.enable = true;
 
 
 

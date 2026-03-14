@@ -3,14 +3,20 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
-    caelestia-shell.url = "github:caelestia-dots/shell";
-    caelestia-shell.inputs.nixpkgs.follows = "nixpkgs";
-    caelestia-cli.url = "github:caelestia-dots/cli";
-    caelestia-cli.inputs.nixpkgs.follows = "nixpkgs";
+    #caelestia-shell.url = "github:caelestia-dots/shell";
+    #caelestia-shell.inputs.nixpkgs.follows = "nixpkgs";
+    #caelestia-cli.url = "github:caelestia-dots/cli";
+    #caelestia-cli.inputs.nixpkgs.follows = "nixpkgs";
+
+    colorshell.url = "github:retrozinndev/colorshell";
+    colorshell.inputs.nixpkgs.follows = "nixpkgs";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    #quickshell.url = "github:quickshell-mirror/quickshell";
+    #quickshell.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = inputs @ {
     self,
@@ -32,7 +38,7 @@
             {
               home-manager = {
                 extraSpecialArgs = specialArgs;
-                #useGlobalPkgs = true; # disbled because nixpkgs is blocked when this is enabled
+                #useGlobalPkgs = true; # disabled because nixpkgs is blocked when this is enabled
                 useUserPackages = true;
                 backupFileExtension = "backup";
                 users.nhoxsang2411994 = import ./home;

@@ -12,13 +12,18 @@ let
 in
 {
   imports = [
-#     ./other.nix
-    ./caelestia.nix
+#    ./other.nix
+#    ./caelestia.nix
+    ./hyprpaper
+    ./hyprsunset.nix
+    ./hypridle.nix
     ./shell/zsh.nix
     ./shell/zoxide.nix
     ./ghostty.nix
-#     ./vicinae.nix
-#     ./jj.nix
+    ./colorshell.nix
+#    ./quickshell.nix
+#    ./vicinae.nix
+#    ./jj.nix
   ];
 
   nixpkgs = { inherit overlays; };
@@ -28,8 +33,7 @@ in
     homeDirectory = "/home/nhoxsang2411994";
     stateVersion = "25.11";
   };
-
-
+  
   # Symlink every file in `./dotfiles/dot-config` to `~/.config/`
   xdg.configFile = mkSymlinks ./dotfiles/dot-config "${dotfiles}/dot-config";
 

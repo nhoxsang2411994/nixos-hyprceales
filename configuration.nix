@@ -21,7 +21,6 @@
    xone.enable = true;
    graphics = {
      enable = true;
-     # driSupport = true; #comment out since no longer supported
    };
  };
 
@@ -154,6 +153,13 @@
 
  # Enable flakes and other experimental features
  nix.settings.experimental-features = ["nix-command" "flakes" "pipe-operators"];
+ # Environment variables
+ environment.sessionVariables = {
+   XDG_CACHE_HOME = "$HOME/.cache"; #colorshell requires this
+   XDG_CONFIG_HOME = "$HOME/.config";
+   XDG_DATA_HOME = "$HOME/.local/share";
+   XDG_STATE_HOME = "$HOME/.local/state";
+ };
 
  # List packages installed in system profile. To search, run:
  # $ nix search wget
