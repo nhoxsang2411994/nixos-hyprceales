@@ -15,6 +15,7 @@
         }
       ];
     };
+    systemdTarget = "hyprland-session.target";
   };
 
 }

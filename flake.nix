@@ -11,6 +11,12 @@
     colorshell.url = "github:retrozinndev/colorshell";
     colorshell.inputs.nixpkgs.follows = "nixpkgs";
 
+    astal-git.url = "github:Aylur/astal";
+    astal-git.inputs.nixpkgs.follows = "nixpkgs";
+
+    waybar-git.url = "github:Alexays/Waybar";
+    waybar-git.inputs.nixpkgs.follows = "nixpkgs";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,7 +44,7 @@
             {
               home-manager = {
                 extraSpecialArgs = specialArgs;
-                #useGlobalPkgs = true; # disabled because nixpkgs is blocked when this is enabled
+                useGlobalPkgs = false; # disabled because nixpkgs is blocked when this is enabled
                 useUserPackages = true;
                 backupFileExtension = "backup";
                 users.nhoxsang2411994 = import ./home;

@@ -39,9 +39,9 @@
  networking.networkmanager.dns = "none";
  services.resolved.enable = false;
 
- hardware.bluetooth.enable = true;
- hardware.bluetooth.powerOnBoot = true;
- services.blueman.enable = true;
+# hardware.bluetooth.enable = true;
+# hardware.bluetooth.powerOnBoot = true;
+# services.blueman.enable = true;
 
  # Set your time zone.
  time.timeZone = "Asia/Ho_Chi_Minh";
@@ -92,16 +92,29 @@
    LC_TIME = "vi_VN";
  };
 
+ # Enable an IME,i.e. ibus
+ services.xserver.desktopManager.runXdgAutostartIfNone = true; # wiki https://wiki.nixos.org/wiki/Fcitx5#Setup
+ i18n.inputMethod = {
+   type = "fcitx5";
+   enable = true;
+   fcitx5.addons = with pkgs; [ /* any engine you want, for example */
+     fcitx5-bamboo
+     fcitx5-mozc
+     fcitx5-gtk
+   ];
+   ibus.waylandFrontend = true;
+ };
+
  # Enable the X11 windowing system.
  # You can disable this if you're only using the Wayland session.
- services.xserver.enable = true;
+ services.xserver.enable = false;
 
  # Shell
  users.defaultUserShell = pkgs.zsh;
  programs.zsh.enable = true;
  programs.fish.enable = true;
 
- # Enable the KDE Plasma Desktop Environment.
+ # Enable the KDE Plasma Desktop Envir  onment.
  services.displayManager.sddm.enable = true;
  services.desktopManager.plasma6.enable = true;
  services.displayManager.sddm.theme = "sddm-astronaut-theme";
@@ -159,6 +172,12 @@
    XDG_CONFIG_HOME = "$HOME/.config";
    XDG_DATA_HOME = "$HOME/.local/share";
    XDG_STATE_HOME = "$HOME/.local/state";
+   GDK_BACKEND = "wayland,x11,*"; # GTK: Use Wayland if available; if not, try X11 and then any other GDK backend.
+   QT_QPA_PLATFORM = "wayland;xcb"; # Qt: Use Wayland if available, fall back to X11 if not.
+   SDL_VIDEODRIVER = "wayland"; # Run SDL2 applications on Wayland. Remove or set to x11 if games that provide older versions of SDL cause compatibility issues
+   CLUTTER_BACKEND = "wayland"; # Clutter package already has Wayland enabled, this variable will force Clutter applications to try and use the Wayland backend
+   QT_WAYLAND_DISABLE_WINDOWDECORATION = 1; #Disables window decorations on Qt applications
+   QT_QPA_PLATFORMTHEME = "qt6ct"; #Tells Qt based applications to pick your theme from qt6ct, use with Kvantum
  };
 
  # List packages installed in system profile. To search, run:
@@ -206,20 +225,7 @@
  fontconfig.enable = true;
  };
 
- # Enable an IME,i.e. ibus
- i18n.inputMethod = {
-   type = "fcitx5";
-   enable = true;
-   fcitx5.addons = with pkgs; [ /* any engine you want, for example */ fcitx5-bamboo ];
- };
 
- # Some programs need SUID wrappers, can be configured further or are
- # started in user sessions.
- # programs.mtr.enable = true;
- # programs.gnupg.agent = {
- #   enable = true;
- #   enableSSHSupport = true;
- # };
  programs = {
    #sway.enable = true;
    steam = {

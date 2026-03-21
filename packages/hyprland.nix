@@ -7,9 +7,4 @@
     };
   };
 
-  services.displayManager.sddm = {
-    enable = true;
-  };
-
-  environment.systemPackages = with pkgs; [ brightnessctl hyprshot playerctl ];
 }

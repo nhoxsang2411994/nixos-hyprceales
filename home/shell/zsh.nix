@@ -1,7 +1,7 @@
 { lib, config, rootPath, ... }: {
   # Allow unfree package
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "zsh-abbr" ];
+  builtins.elem (lib.getName pkg) [ "zsh-abbr" ];
 
   programs.fzf.enableZshIntegration = true;
   programs.fzf.enableBashIntegration = true;
@@ -21,7 +21,7 @@
         ''
           if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
           then
-              exec fish -l
+            exec fish -l
           fi
         '';
       loadZsh = "source ~/.zshrc";

@@ -76,9 +76,9 @@ in
   zoxide-add-directories = "fd --type directory --max-depth 1 | xargs zoxide add";
 
   # Mullvad
-  mvc = "mullvad connect";
-  mvd = "mullvad disconnect";
-  mvr = "mullvad reconnect";
+#   mvc = "mullvad connect";
+#   mvd = "mullvad disconnect";
+#   mvr = "mullvad reconnect";
 
   # Other
   src = "exec zsh";

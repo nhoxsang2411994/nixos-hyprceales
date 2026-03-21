@@ -14,13 +14,14 @@ in
   imports = [
 #    ./other.nix
 #    ./caelestia.nix
+    ./hyprland-hm.nix
     ./hyprpaper
     ./hyprsunset.nix
     ./hypridle.nix
     ./shell/zsh.nix
     ./shell/zoxide.nix
     ./ghostty.nix
-    ./colorshell.nix
+    ./waybar-hm.conf
 #    ./quickshell.nix
 #    ./vicinae.nix
 #    ./jj.nix
@@ -45,7 +46,7 @@ in
     enable = true;
     defaultApplications = {
       "inode/directory" = "org.kde.dolphin.desktop";
-      "application/pdf" = "sioyek.desktop";
+      "application/pdf" = "firefox-brower.desktop";
       "x-scheme-handler/http" = "firefox-brower.desktop";
       "x-scheme-handler/https" = "firefox-brower.desktop";
     };

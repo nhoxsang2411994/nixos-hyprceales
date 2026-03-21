@@ -7,7 +7,7 @@
 {
   imports = [
     ./hyprland.nix
-    ./colorshell.nix
+#     ./colorshell.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -17,6 +17,8 @@
     font-awesome
     nerd-fonts.fira-code
     noto-fonts-color-emoji
+    nerd-fonts.symbols-only
+    nerd-fonts.jetbrains-mono
   ];
 
   # Programs
@@ -32,8 +34,8 @@
 
   # Services
   services = {
-    #upower.enable = true; # Required by Caelestia
-    #power-profiles-daemon.enable = true;
+    upower.enable = true; # Required by Caelestia
+    power-profiles-daemon.enable = true;
 
 
 

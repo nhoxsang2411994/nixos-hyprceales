@@ -1,17 +1,19 @@
-{ rootPath, ... }: {
+{ rootPath, pkgs, ... }: {
+
   services.hyprpaper = {
     enable = true;
-
     settings =
       let
-        anime_skull = "${rootPath}/home/hyprpaper/anime_skull.png";
+        walldir = "${rootPath}/home/hyprpaper";
         moony-mountains = "${rootPath}/home/hyprpaper/moony-mountains.jpg";
+        abstract-darkhole = "${rootPath}/home/hyprpaper/abstract-darkhole.png";
       in {
         #preload = [ anime_skull moony-mountains ];
         wallpaper = {
           monitor = "HDMI-A-2";
-          path = "${anime_skull}";
+          path = "${walldir}";
           fit_mode = "cover";
+          timeout = 300;# seconds
         };
       };
   };
