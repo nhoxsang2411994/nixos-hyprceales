@@ -1,10 +1,12 @@
 {
 	// layer.value: "top" or "bottom" (default)
 	"layer": "bottom",
-	"modules-center": ["clock", "hyprland/workspaces", "pulseaudio", "cava", "network", "cpu","memory", "systemd-failed-units"],
+	"modules-center": ["clock", "hyprland/workspaces", "mpris", "cava",
+			"cpu", "memory", "network", "group/hardware"],
 	"spacing": 10,
 	"clock": {
 		"interval": 60,
+		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
 		"format" : "󰥔  {:%a, %d. %b  %H:%M}"
 	},
 	"hyprland/workspaces": {
@@ -18,7 +20,7 @@
 			"update-active-window": true,
 
 			// Format of the windows in the taskbar. Default: "{icon}". Allowed variables: {icon}, {title}
-			"format": "{icon} {title:.5}",
+			"format": "{icon} {title:.10}",
 
 			// Icon size in pixels. Default: 16
 			"icon-size": 16,
@@ -32,6 +34,8 @@
 			// List of regexes. A window will NOT be shown if its window class or title match one or more items. Default: []
 			//"ignore-list": [ "code", "Firefox - .*" ],
 
+			"on-click-window": "${XDG_CONFIG_HOME}/waybar/scripts/focus-or-close-window.sh {address} {button}",
+
 		},
 		"format-icons": {
 			"active": "[󰣏] ",
@@ -44,7 +48,7 @@
 		}
 	},
 	"pulseaudio": {
-	"format": "{icon}	{volume}%",
+	"format": "{icon}  {volume}%	 ",
 	"format-bluetooth": "{icon}	{volume}%",
 	"format-muted": "",
 	"format-icons": {
@@ -63,12 +67,43 @@
 		"on-click": "pavucontrol",
 		"ignored-sinks": ["Easy Effects Sink"]
 	},
+	"mpris": {
+		"format": "{player_icon}	Playing: {dynamic}",
+		"format-paused": "󰏤 {status_icon} <i>{dynamic}</i>",
+		"dynamic-order": ["artist", "title", "album"],
+		"title-len": 10,
+		"artist-len": 10,
+		"player-icons": {
+			"default": "▶",
+			"mpv": "🎵"
+		},
+		"status-icons": {
+			"paused": "⏸"
+		}
+		// "ignored-players": ["firefox"]
+	},
+	"group/hardware": {
+		"orientation": "inherit",
+		"modules": [
+			"pulseaudio",
+			"systemd-failed-units",
+			"custom/lock",
+			"custom/quit",
+			"custom/restart",
+			"custom/power"
+		],
+		"drawer": {
+			"transition-duration": 300,
+			"children-class": "chdr-module",
+			"transition-left-to-right": true
+		}
+	},
 	"cava": {
         //"cava_config": "$XDG_CONFIG_HOME/cava/config",
         "framerate": 30,
         "autosens": 0,
-        "sensitivity": 2.5,
-        "bars": 12,
+        "sensitivity": 2.95,
+        "bars": 14,
         "lower_cutoff_freq": 50,
         "higher_cutoff_freq": 10000,
         "hide_on_silence": false,
@@ -80,19 +115,29 @@
         "bar_delimiter": 0,
         "monstercat": false,
         "waves": false,
-        "noise_reduction": 0.012,
+        "noise_reduction": 0.021,
         "input_delay": 2,
-        "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
+        "format-icons": [
+			"<span color='#073763'>▁</span>", // green
+			"<span color='#bf9000'>▂</span>", // blue
+			"<span color='#bf9000'>▃</span>", // white
+			"<span color='#bf9000'>▄</span>", // white
+			"<span color='#bf9000'>▅</span>", // yellow
+			"<span color='#bf9000'>▆</span>", // yellow
+			"<span color='#bf9000'>▇</span>", // orange
+			"<span color='#bf9000'>█</span>"  // red
+		],
         "actions": {
 			"on-click-right": "mode"
 		}
     },
 	"network": {
 		"interface": "enp14s0",
+		"interval" : 10,
 		"format": "{ifname}",
 		"format-wifi": "{essid} ({signalStrength}%) ",
-		"format-ethernet": "󰈀  {ifname}  {bandwidthDownBytes}  {bandwidthUpBytes} ",
-		"format-disconnected": "", //An empty format will hide the module.
+		"format-ethernet": "󰈀  {ifname}  {bandwidthDownBits}  {bandwidthUpBits}	",
+		"format-disconnected": "Disconnected", //An empty format will hide the module.
 		"tooltip-format": "{ifname} via {gwaddr} 󰊗",
 		"tooltip-format-wifi": "{essid} ({signalStrength}%) ",
 		"tooltip-format-ethernet": "{ifname} ",
@@ -100,21 +145,24 @@
 		"max-length": 50
 	},
 	"cpu": {
-     "format": "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
-     "format-icons": [
-			"<span color='#69ff94'>▁</span>", // green
-			"<span color='#2aa9ff'>▂</span>", // blue
-			"<span color='#f8f8f2'>▃</span>", // white
-			"<span color='#f8f8f2'>▄</span>", // white
-			"<span color='#ffffa5'>▅</span>", // yellow
-			"<span color='#ffffa5'>▆</span>", // yellow
-			"<span color='#ff9977'>▇</span>", // orange
-			"<span color='#dd532e'>█</span>"  // red
+		"interval": 5,
+		"format": "  {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
+		"format-icons": [
+			"<span color='#073763'>▁</span>", // green
+			"<span color='#28a1c1'>▂</span>", // blue
+			"<span color='#28a1c1'>▃</span>", // white
+			"<span color='#6a28c1'>▄</span>", // white
+			"<span color='#6a28c1'>▅</span>", // yellow
+			"<span color='#c12898'>▆</span>", // yellow
+			"<span color='#c12898'>▇</span>", // orange
+			"<span color='#c12831'>█</span>"  // red
 		],
+		"on-click": "kitty -e btop"
+
 	},
 	"memory": {
-		"interval": 30,
-		"format": "󰍛 {used:0.1f}G/{total:0.1f}G",
+		"interval": 5,
+		"format": "󰍛 {used:0.1f}G/{total:0.1f}G	",
 		"max-length": 15
 	},
 	"systemd-failed-units": {
@@ -123,5 +171,29 @@
 		"format-ok": "✓",
 		"system": true, // Monitor failed systemwide units.
 		"user": false // Ignore failed user units.
-	}
+	},
+	"custom/power": {
+		"format": "  ",
+		"tooltip": true,
+		"tooltip-format" : "Shutdown PC",
+		"on-click": "shutdown now"
+	},
+	"custom/quit": {
+		"format": " 󰍃 ",
+		"tooltip": true,
+		"tooltip-format" : "Logout",
+		"on-click": "hyprctl dispatch exit"
+	},
+	"custom/restart": {
+		"format": "  ",
+		"tooltip": true,
+		"tooltip-format" : "Restart",
+		"on-click": "reboot"
+	},
+	"custom/lock": {
+		"format": "  ",
+		"tooltip": true,
+		"tooltip-format" : "Lockscreen",
+		"on-click": "hyprlock"
+	},
 }
