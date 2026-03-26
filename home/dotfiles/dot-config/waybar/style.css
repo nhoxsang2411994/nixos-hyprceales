@@ -1,0 +1,198 @@
+@import "colors.css";
+
+* {
+    /*GTK theme fix*/
+    all: unset;
+    font-family:  "FiraCode Nerd Font", "JetBrainsMono Nerd Font Propo", "Noto Sans CJK JP", "Noto Sans CJK KR";
+}
+
+.custom label {
+    color: @color7;
+}
+
+.modules-center {
+    background-color: @background;
+    padding: 2px 12px;
+    border-radius: 99px;
+    letter-spacing: -1px;
+}
+
+tooltip {
+    background-color: @background;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+tooltip label {
+    color: #ffffff;             /* Force white text */
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 1); /* Glow effect for readability */
+
+    /* Create a dark translucent box behind the text */
+/*     background-color: rgba(0, 0, 0, 0.6); */
+
+    /* Position the text at the bottom of the image */
+/*     vertical-align: bottom; */
+}
+
+
+#clock {
+    color: @color7;
+    font-weight: 600;
+}
+
+#cpu #memory #network {
+    color: @color7;
+}
+
+#media {
+    color: @color7;
+    background-color: @color1;
+    border-radius: 10px;
+}
+
+#pulseaudio {
+    padding: 0px 8px;
+    letter-spacing: 1px;
+}
+
+#mprava {
+    background-color: @color2;
+    border-radius: 8px;
+}
+
+#mpris {
+    padding: 0px 6px;
+    margin-left: 2px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+}
+
+#custom-cava {
+    padding: 0px 6px;
+    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.377);
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+/* Keyframes to move the background position */
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* currently, cava.updated does not work */
+/* correct: #cava:not(.silent) */
+#custom-cava:not(.silent) {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient-animation 10s ease infinite;
+    padding: 0 10px;
+    color: white;
+}
+
+#workspaces {
+    background-color: @background;
+    border-radius: 10px;
+}
+
+#workspaces button {
+    border-radius: 10px;
+    background-color: @color1;
+    padding: 2px 6px;
+    transition: all 300ms ease-in-out;
+}
+
+#workspaces button.empty {
+    color: @color8;
+    transition: none;
+}
+
+#workspaces button.active {
+    background-color: @color7;
+    color: @color0;
+    padding: 0 12px;
+    font-weight: 600;
+    transition: none;
+}
+
+#workspaces button label {
+    letter-spacing: 0.8px;
+    padding: 0 4px;
+}
+
+
+#hardware {
+    background-color: @color1;
+    padding: 0px 2px;
+    border-radius: 15px;
+    color: @color7;
+}
+
+#systemd-failed-units {
+    padding: 0px 6px;
+}
+
+
+#custom-lock {
+    padding: 0px 12px;
+    border-radius: 15px;
+}
+
+#custom-lock:hover {
+    background-color: @color2;
+}
+
+#custom-power {
+    padding: 0px 12px;
+    border-radius: 15px;
+}
+
+#custom-power:hover {
+    background-color: @color2;
+}
+
+menu {
+    background: #1e1e2e;          /* Dark background */
+    border: 1px solid #313244;
+    border-radius: 8px;
+    padding: 5px;
+    margin: 5px;
+}
+
+menuitem {
+    color: #cdd6f4;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+/* Hover state for menu items */
+menuitem:hover {
+    background: #f38ba8;          /* Red tint for power menu */
+    color: #11111b;               /* Dark text on light background */
+}
+
+#custom-restart {
+    padding: 0px 12px;
+    border-radius: 15px;
+}
+
+#custom-restart:hover {
+    background-color: @color2;
+}
+
+#custom-quit {
+    padding: 0px 12px;
+    border-radius: 15px;
+}
+
+#custom-quit:hover {
+    background-color: @color2;
+}

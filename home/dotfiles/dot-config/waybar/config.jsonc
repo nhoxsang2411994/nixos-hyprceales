@@ -1,13 +1,13 @@
 {
 	// layer.value: "top" or "bottom" (default)
+	"margin-top": 16,
+	"spacing" : 14,
 	"layer": "bottom",
-	"modules-center": ["clock", "hyprland/workspaces", "mpris", "cava",
-			"cpu", "memory", "network", "group/hardware"],
-	"spacing": 10,
+	"modules-center": ["clock", "hyprland/workspaces", "group/media", "cpu", "memory", "network", "group/hardware"],
 	"clock": {
 		"interval": 60,
 		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-		"format" : "󰥔  {:%a, %d. %b  %H:%M}"
+		"format" : "󰥔 {:%a, %d. %b %H:%M}"
 	},
 	"hyprland/workspaces": {
 		"format": "{icon}{windows}",
@@ -20,10 +20,10 @@
 			"update-active-window": true,
 
 			// Format of the windows in the taskbar. Default: "{icon}". Allowed variables: {icon}, {title}
-			"format": "{icon} {title:.10}",
+			"format": "{icon}{title:.6}",
 
 			// Icon size in pixels. Default: 16
-			"icon-size": 16,
+			"icon-size": 14,
 
 			// Either the name of an installed icon theme or an array of themes (ordered by priority). If not set, the default icon theme is used.
 			"icon-theme": "some_icon_theme",
@@ -38,124 +38,148 @@
 
 		},
 		"format-icons": {
-			"active": "[󰣏] ",
-			"empty":"󱀝",
-			"default": "󱀝 "
+			"1": 1,
+			"2": 2,
+			"3": 3,
+			"4": 4,
+			"5": 5
 		},
-		"format-window-separator": "",
+		"format-window-separator": "",
 		"persistent-workspaces": {
 				"*": 5, // 5 workspaces by default on every monitor
 		}
 	},
 	"pulseaudio": {
-	"format": "{icon}  {volume}%	 ",
-	"format-bluetooth": "{icon}	{volume}%",
-	"format-muted": "",
-	"format-icons": {
-			"alsa_output.pci-0000_00_1f.3.analog-stereo": "󰐹",
-			"alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "󱈜",
-			"headphone": "",
-			"hands-free": "󱡏",
-			"headset": "",
-			"phone": "",
-			"phone-muted": "",
-			"portable": "",
-			"car": "",
-			"default": ["", ""]
-		},
-		"scroll-step": 1,
-		"on-click": "pavucontrol",
-		"ignored-sinks": ["Easy Effects Sink"]
+		"format": "{icon} {volume}%",
+		"format-bluetooth": "{icon} {volume}%",
+		"format-muted": " Muted",
+		"format-icons": {
+				"alsa_output.pci-0000_00_1f.3.analog-stereo": "󰐹",
+				"alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "󱈜",
+				"headphone": "",
+				"hands-free": "󱡏",
+				"headset": "",
+				"phone": "",
+				"phone-muted": "",
+				"portable": "",
+				"car": "",
+				"default": ["", "", ""]
+			},
+			"scroll-step": 1,
+			"on-click": "pavucontrol",
+			"ignored-sinks": ["Easy Effects Sink"]
+	},
+	"custom/mpris-art": {
+	    "exec": "${XDG_CONFIG_HOME}/waybar/scripts/get_thumb.sh",
+		"format" : "",
+		"interval": 30 // How often to check for a new song/image
+	},
+	"image#mpris-thumb": {
+		"path": "/tmp/mpris_thumb.png", // The best location is /tmp. Cannot access $HOME.
+		"size": 32,
+		"tooltip": true,
+		"interval": 10,
 	},
 	"mpris": {
-		"format": "{player_icon}	Playing: {dynamic}",
-		"format-paused": "󰏤 {status_icon} <i>{dynamic}</i>",
-		"dynamic-order": ["artist", "title", "album"],
+		"format": "{status_icon} 🎵 <i>{dynamic}</i>",
+		"format-paused": "{status_icon} 🎵 <i>{dynamic}</i>",
+		"dynamic-importance-order": [],
 		"title-len": 10,
-		"artist-len": 10,
+		"tooltip": true,
+		"on-click": "playerctl play-pause", // Direct command is more reliable than the default
+		"on-click-right": "playerctl next",
 		"player-icons": {
 			"default": "▶",
 			"mpv": "🎵"
 		},
 		"status-icons": {
-			"paused": "⏸"
+			"paused": "",
+			"playing": "▶"
 		}
-		// "ignored-players": ["firefox"]
+	},
+	"group/mprava": {
+		"orientation": "inherit",
+		"modules": [
+			"mpris",
+			"custom/mpris-art",
+			"image#mpris-thumb",
+			"custom/cava"
+		],
+	},
+	"group/media": {
+		"orientation": "inherit",
+		"modules": [
+			"pulseaudio",
+			"group/mprava"
+		],
 	},
 	"group/hardware": {
 		"orientation": "inherit",
 		"modules": [
-			"pulseaudio",
 			"systemd-failed-units",
-			"custom/lock",
-			"custom/quit",
-			"custom/restart",
-			"custom/power"
-		],
-		"drawer": {
-			"transition-duration": 300,
-			"children-class": "chdr-module",
-			"transition-left-to-right": true
-		}
+			"custom/power",
+		]
 	},
-	"cava": {
-        //"cava_config": "$XDG_CONFIG_HOME/cava/config",
+	/*"cava": {
         "framerate": 30,
         "autosens": 0,
-        "sensitivity": 2.95,
+        "sensitivity": 0.95,
         "bars": 14,
-        "lower_cutoff_freq": 50,
+        "lower_cutoff_freq": 60,
         "higher_cutoff_freq": 10000,
         "hide_on_silence": false,
-        // "format_silent": "quiet",
-        "method": "pipewire",
+        //"format_silent": "quiet",
+        "method": "pulse",
         "source": "auto",
         "stereo": true,
-        "reverse": false,
+        "reverse": true,
         "bar_delimiter": 0,
         "monstercat": false,
         "waves": false,
-        "noise_reduction": 0.021,
+        "noise_reduction": 0.4,
         "input_delay": 2,
         "format-icons": [
-			"<span color='#073763'>▁</span>", // green
-			"<span color='#bf9000'>▂</span>", // blue
-			"<span color='#bf9000'>▃</span>", // white
-			"<span color='#bf9000'>▄</span>", // white
-			"<span color='#bf9000'>▅</span>", // yellow
-			"<span color='#bf9000'>▆</span>", // yellow
-			"<span color='#bf9000'>▇</span>", // orange
-			"<span color='#bf9000'>█</span>"  // red
+			"▁", "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"
 		],
         "actions": {
 			"on-click-right": "mode"
 		}
-    },
+    },*/
+	"custom/cava": {
+		"format": "{}",
+		"tooltip": false,
+		"exec": "${XDG_CONFIG_HOME}/waybar/scripts/waybar-cava.sh",
+		"return-type": "text",
+		"on-click": "none",
+		"on-click-right": "none",
+		"on-scroll-up": "none",
+		"on-scroll-down": "none"
+	},
 	"network": {
 		"interface": "enp14s0",
 		"interval" : 10,
 		"format": "{ifname}",
 		"format-wifi": "{essid} ({signalStrength}%) ",
-		"format-ethernet": "󰈀  {ifname}  {bandwidthDownBits}  {bandwidthUpBits}	",
+		"format-ethernet": "󰈀 {ifname}  {bandwidthDownBits}  {bandwidthUpBits}	",
 		"format-disconnected": "Disconnected", //An empty format will hide the module.
 		"tooltip-format": "{ifname} via {gwaddr} 󰊗",
 		"tooltip-format-wifi": "{essid} ({signalStrength}%) ",
 		"tooltip-format-ethernet": "{ifname} ",
 		"tooltip-format-disconnected": "Disconnected",
-		"max-length": 50
+		"max-length": 35
 	},
 	"cpu": {
 		"interval": 5,
-		"format": "  {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
+		"format": " {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
 		"format-icons": [
-			"<span color='#073763'>▁</span>", // green
-			"<span color='#28a1c1'>▂</span>", // blue
-			"<span color='#28a1c1'>▃</span>", // white
-			"<span color='#6a28c1'>▄</span>", // white
-			"<span color='#6a28c1'>▅</span>", // yellow
-			"<span color='#c12898'>▆</span>", // yellow
-			"<span color='#c12898'>▇</span>", // orange
-			"<span color='#c12831'>█</span>"  // red
+			"<span color='#4D4E4D'>▁</span>", // green
+			"<span color='#31558E'>▂</span>", // blue
+			"<span color='#31558E'>▃</span>", // white
+			"<span color='#31558E'>▄</span>", // white
+			"<span color='#31558E'>▅</span>", // yellow
+			"<span color='#31558E'>▆</span>", // yellow
+			"<span color='#31558E'>▇</span>", // orange
+			"<span color='#31558E'>█</span>"  // red
 		],
 		"on-click": "kitty -e btop"
 
@@ -173,25 +197,31 @@
 		"user": false // Ignore failed user units.
 	},
 	"custom/power": {
-		"format": "  ",
-		"tooltip": true,
-		"tooltip-format" : "Shutdown PC",
-		"on-click": "shutdown now"
+	"format" : "⏻",
+		"tooltip": false,
+		"menu": "on-click",
+		"menu-file": "${XDG_CONFIG_HOME}/waybar/power-menu.xml",
+		"menu-actions": {
+			"shutdown": "shutdown",
+			"reboot": "reboot",
+			"exit": "hyprctl dispatch exit",
+			"lock": "hyprlock",
+		},
 	},
 	"custom/quit": {
-		"format": " 󰍃 ",
+		"format": "󰍃",
 		"tooltip": true,
 		"tooltip-format" : "Logout",
 		"on-click": "hyprctl dispatch exit"
 	},
 	"custom/restart": {
-		"format": "  ",
+		"format": "",
 		"tooltip": true,
 		"tooltip-format" : "Restart",
 		"on-click": "reboot"
 	},
 	"custom/lock": {
-		"format": "  ",
+		"format": "",
 		"tooltip": true,
 		"tooltip-format" : "Lockscreen",
 		"on-click": "hyprlock"

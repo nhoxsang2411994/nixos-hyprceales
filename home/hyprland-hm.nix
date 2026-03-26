@@ -15,6 +15,7 @@
     brightnessctl
     hyprshot
     playerctl
+    pywal16
     hypridle
     hyprlock
     hyprpicker
