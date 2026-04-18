@@ -23,6 +23,9 @@ data_format = ascii
 ascii_max_range = $MAX_RANGE
 " > "$CAVA_CONF"
 
+# wait a bit before starting CAVA
+sleep 3
+
 # Run CAVA in background
 cava -p "$CAVA_CONF" &
 

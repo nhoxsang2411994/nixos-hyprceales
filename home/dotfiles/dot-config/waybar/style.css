@@ -12,7 +12,7 @@
 
 .modules-center {
     background-color: @background;
-    padding: 2px 12px;
+    padding: 0px 0px;
     border-radius: 99px;
     letter-spacing: -1px;
 }
@@ -27,12 +27,24 @@ tooltip label {
     color: #ffffff;             /* Force white text */
     font-weight: bold;
     text-shadow: 0 0 5px rgba(0, 0, 0, 1); /* Glow effect for readability */
+}
 
-    /* Create a dark translucent box behind the text */
-/*     background-color: rgba(0, 0, 0, 0.6); */
+#custom-menu {
+    color: @cursor;
+    background-color: @color2;
+    margin: 4px;               /* Space around the button */
+    padding: 0px 24px;         /* Horizontal padding to make it wider */
+    border-radius: 8px;        /* Rounded corners */
 
-    /* Position the text at the bottom of the image */
-/*     vertical-align: bottom; */
+    /* Border (Optional) */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease; /* Smooth hover effect */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+}
+
+#custom-menu:hover {
+    background: #f38ba8;
+    color: @color6;
 }
 
 
@@ -41,8 +53,13 @@ tooltip label {
     font-weight: 600;
 }
 
-#cpu #memory #network {
+#cpu #memory #network #temperature {
     color: @color7;
+}
+
+#temperature.critical {
+    color: #ff0000;
+    background-color: #eb4d4b;
 }
 
 #media {
@@ -62,9 +79,14 @@ tooltip label {
 }
 
 #mpris {
-    padding: 0px 6px;
+    padding: 0px 4px;
     margin-left: 2px;
     text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+}
+
+#image.mpris-thumb {
+    margin-right: 4px;
+    border-radius: 10px;
 }
 
 #custom-cava {

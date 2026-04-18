@@ -3,7 +3,12 @@
 	"margin-top": 16,
 	"spacing" : 14,
 	"layer": "bottom",
-	"modules-center": ["clock", "hyprland/workspaces", "group/media", "cpu", "memory", "network", "group/hardware"],
+	"modules-center": ["custom/menu", "hyprland/workspaces", "group/media", "temperature", "memory", "network", "group/hardware"],
+	"custom/menu": {
+		"format": "󱝁", // Or your distro icon
+		"on-click": "${XDG_CONFIG_HOME}/waybar/scripts/rofi-fav.sh", // Example for Wofi
+		"tooltip": false
+	},
 	"clock": {
 		"interval": 60,
 		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
@@ -79,6 +84,7 @@
 		"size": 32,
 		"tooltip": true,
 		"interval": 10,
+		"on-click": "swayimg -C ~/.config/swayimg/init.lua /tmp/mpris_thumb.png"
 	},
 	"mpris": {
 		"format": "{status_icon} 🎵 <i>{dynamic}</i>",
@@ -116,6 +122,7 @@
 	"group/hardware": {
 		"orientation": "inherit",
 		"modules": [
+			"clock",
 			"systemd-failed-units",
 			"custom/power",
 		]
@@ -150,7 +157,7 @@
 		"tooltip": false,
 		"exec": "${XDG_CONFIG_HOME}/waybar/scripts/waybar-cava.sh",
 		"return-type": "text",
-		"on-click": "none",
+		"on-click": "pkill cava && cava",
 		"on-click-right": "none",
 		"on-scroll-up": "none",
 		"on-scroll-down": "none"
@@ -168,22 +175,15 @@
 		"tooltip-format-disconnected": "Disconnected",
 		"max-length": 35
 	},
-	"cpu": {
-		"interval": 5,
-		"format": " {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
-		"format-icons": [
-			"<span color='#4D4E4D'>▁</span>", // green
-			"<span color='#31558E'>▂</span>", // blue
-			"<span color='#31558E'>▃</span>", // white
-			"<span color='#31558E'>▄</span>", // white
-			"<span color='#31558E'>▅</span>", // yellow
-			"<span color='#31558E'>▆</span>", // yellow
-			"<span color='#31558E'>▇</span>", // orange
-			"<span color='#31558E'>█</span>"  // red
-		],
-		"on-click": "kitty -e btop"
-
-	},
+	    "temperature": {
+        "thermal-zone": 2,
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        "format-critical": "{temperatureC}°C {icon}",
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", " thermometers"],
+        "interval": 10
+    },
 	"memory": {
 		"interval": 5,
 		"format": "󰍛 {used:0.1f}G/{total:0.1f}G	",
@@ -202,10 +202,11 @@
 		"menu": "on-click",
 		"menu-file": "${XDG_CONFIG_HOME}/waybar/power-menu.xml",
 		"menu-actions": {
-			"shutdown": "shutdown",
+			"shutdown": "shutdown now",
 			"reboot": "reboot",
 			"exit": "hyprctl dispatch exit",
 			"lock": "hyprlock",
+			"screenshot": "hyprshot -m region -o '$HOME/Pictures/Screenshot/' -- imv"
 		},
 	},
 	"custom/quit": {

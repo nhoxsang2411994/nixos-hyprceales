@@ -6,6 +6,19 @@
     enable = true;
   };
 
+  programs.yazi = {
+    enable = true;
+    enableZshIntegration = true; # Adds shell aliases
+    shellWrapperName = "y";       # Use 'y' to launch with shell tracking
+
+    settings = {
+      manager = {
+        show_hidden = true;
+        sort_by = "mtime";
+      };
+    };
+  };
+
   home.packages = with pkgs; [
     app2unit
     btop
@@ -19,8 +32,13 @@
     hypridle
     hyprlock
     hyprpicker
+    hyprpaper
     pavucontrol
     #polkit_gnome
     wl-clipboard
+    rofi
+    swayimg
+    wev
+    glib # Provides the 'gio' command
   ];
 }

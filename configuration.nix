@@ -25,19 +25,18 @@
  };
 
  # Enable networking
- networking.networkmanager.enable = true;
- networking.dhcpcd.extraConfig = "nohook resolv.conf";
-#  networking.defaultGateway = "192.168.1.1";
- networking.nameservers = [
-#    "8.8.8.8"
-#    "8.8.4.4"
-#    "23.46.197.62"
-#    "118.68.80.100"
-   "127.0.0.1"
-   "::1"
- ];
- networking.networkmanager.dns = "none";
- services.resolved.enable = false;
+ networking = {
+   defaultGateway = "192.168.1.1";
+   networkmanager.enable = true;
+   nameservers = [
+   "8.8.8.8"
+   "8.8.4.4"
+#    "127.0.0.1"
+#    "::1"
+   ];
+#    dhcpcd.extraConfig = "nohook resolv.conf";
+ };
+ services.resolved.enable = true;
 
 # hardware.bluetooth.enable = true;
 # hardware.bluetooth.powerOnBoot = true;
@@ -48,7 +47,7 @@
 
  # Enable encrypted dns
  services.dnscrypt-proxy = {
-   enable = true;
+   enable = false;
    settings = {
      ipv6_servers = true;
      require_dnssec = true;
@@ -65,17 +64,19 @@
 
      # You can choose a specific set of servers from https://github.com/DNSCrypt/dnscrypt-resolvers/blob/master/v3/public-resolvers.md
     server_names = [
-    #   "google"
-    #   "cloudflare"
-    #   "google-ipv6"
-    #   "cloudflare-ipv6"
-       "doh.tiar.app"
+       "google"
+       "cloudflare"
+       "google-ipv6"
+       "cloudflare-ipv6"
+       "a-and-a"
+       "a-and-a-ipv6"
+    #   "doh.tiar.app"
     ];
    };
  };
- systemd.services.dnscrypt-proxy2.serviceConfig = {
-   StateDirectory = "dnscrypt-proxy";
- };
+#  systemd.services.dnscrypt-proxy2.serviceConfig = {
+#    StateDirectory = "dnscrypt-proxy";
+#  };
 
  # Select internationalisation properties.
  i18n.defaultLocale = "en_US.UTF-8";
@@ -107,17 +108,27 @@
 
  # Enable the X11 windowing system.
  # You can disable this if you're only using the Wayland session.
- services.xserver.enable = false;
+ services.xserver.enable = true;
 
  # Shell
  users.defaultUserShell = pkgs.zsh;
  programs.zsh.enable = true;
  programs.fish.enable = true;
 
- # Enable the KDE Plasma Desktop Envir  onment.
- services.displayManager.sddm.enable = true;
- services.desktopManager.plasma6.enable = true;
- services.displayManager.sddm.theme = "sddm-astronaut-theme";
+ # Enable the Hyprland.
+ services.displayManager.sddm = {
+  enable = true;
+  wayland.enable = false;
+ };
+ services.displayManager.defaultSession = "hyprland";
+
+ # Ensure the basic Wayland desktop portals are available for the greeter
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+  };
+
+#  services.desktopManager.plasma6.enable = false;
 
  # Configure keymap in X11
  services.xserver.xkb = {
@@ -192,16 +203,13 @@
    vlc
    ocs-url
    catppuccin-kvantum
-   #kdePackages.sddm-kcm
    anki-bin
    mpv-unwrapped
    protontricks
-   kdePackages.alligator
    tor-browser
    protonvpn-gui
    mangohud
    gamescope
-   sddm-astronaut
    kdePackages.qtmultimedia
    kdePackages.qtstyleplugin-kvantum
    gruvbox-kvantum
