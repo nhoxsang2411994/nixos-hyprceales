@@ -123,8 +123,9 @@
 		"orientation": "inherit",
 		"modules": [
 			"clock",
+			"tray",
 			"systemd-failed-units",
-			"custom/power",
+			"custom/power"
 		]
 	},
 	/*"cava": {

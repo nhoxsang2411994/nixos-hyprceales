@@ -50,6 +50,7 @@ tooltip label {
 
 #clock {
     color: @color7;
+    padding: 0px 8px;
     font-weight: 600;
 }
 

@@ -26,8 +26,11 @@
 
  # Enable networking
  networking = {
-   defaultGateway = "192.168.1.1";
-   networkmanager.enable = true;
+#    defaultGateway = "192.168.1.1";
+   networkmanager = {
+     enable = true;
+     dns = "systemd-resolved";
+   };
    nameservers = [
    "8.8.8.8"
    "8.8.4.4"
@@ -103,7 +106,7 @@
      fcitx5-mozc
      fcitx5-gtk
    ];
-   ibus.waylandFrontend = true;
+#    ibus.waylandFrontend = true;
  };
 
  # Enable the X11 windowing system.
@@ -120,7 +123,7 @@
   enable = true;
   wayland.enable = false;
  };
- services.displayManager.defaultSession = "hyprland";
+ services.displayManager.defaultSession = "hyprland-uwsm";
 
  # Ensure the basic Wayland desktop portals are available for the greeter
   xdg.portal = {
@@ -212,6 +215,7 @@
    gamescope
    kdePackages.qtmultimedia
    kdePackages.qtstyleplugin-kvantum
+   kdePackages.dolphin
    gruvbox-kvantum
    krita
    libwacom

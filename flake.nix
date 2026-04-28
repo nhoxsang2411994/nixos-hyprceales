@@ -1,18 +1,18 @@
 {
   description = "A caelestia-nix test";
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     #caelestia-shell.url = "github:caelestia-dots/shell";
     #caelestia-shell.inputs.nixpkgs.follows = "nixpkgs";
     #caelestia-cli.url = "github:caelestia-dots/cli";
     #caelestia-cli.inputs.nixpkgs.follows = "nixpkgs";
 
-    colorshell.url = "github:retrozinndev/colorshell";
-    colorshell.inputs.nixpkgs.follows = "nixpkgs";
+    #colorshell.url = "github:retrozinndev/colorshell";
+    #colorshell.inputs.nixpkgs.follows = "nixpkgs";
 
-    astal-git.url = "github:Aylur/astal";
-    astal-git.inputs.nixpkgs.follows = "nixpkgs";
+    #astal-git.url = "github:Aylur/astal";
+    #astal-git.inputs.nixpkgs.follows = "nixpkgs";
 
     waybar-git.url = "github:Alexays/Waybar";
     waybar-git.inputs.nixpkgs.follows = "nixpkgs";
