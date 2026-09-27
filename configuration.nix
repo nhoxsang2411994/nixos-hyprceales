@@ -8,6 +8,8 @@
  # Bootloader.
  boot.loader.systemd-boot.enable = true;
  boot.loader.efi.canTouchEfiVariables = true;
+ #kernel
+ boot.kernelPackages = pkgs.linuxPackages_latest;
 
  networking.hostName =  "nixos"; # Define your hostname.
  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -31,6 +33,10 @@
      enable = true;
      dns = "systemd-resolved";
    };
+   firewall = {
+     enable = true;
+     checkReversePath = false;
+  };
    nameservers = [
    "8.8.8.8"
    "8.8.4.4"
@@ -40,6 +46,12 @@
 #    dhcpcd.extraConfig = "nohook resolv.conf";
  };
  services.resolved.enable = true;
+ services.gnome.glib-networking.enable = true; # Fixes deep GLib-GIO backend hooks for GTK apps
+ boot.kernel.sysctl = {
+   "net.ipv4.ip_forward" = 1;
+   "net.ipv6.conf.all.forwarding" = 1;
+ };
+
 
 # hardware.bluetooth.enable = true;
 # hardware.bluetooth.powerOnBoot = true;
@@ -124,11 +136,19 @@
   wayland.enable = false;
  };
  services.displayManager.defaultSession = "hyprland-uwsm";
+  # Enable GNOME Keyring for Proton VPN to store secrets
+ services.gnome.gnome-keyring.enable = true;
+
+ # Configure PAM to automatically unlock the keyring on login
+ security.pam.services.sddm.enableGnomeKeyring = true;
 
  # Ensure the basic Wayland desktop portals are available for the greeter
+ services.dbus.enable = true; # to support mpris functionalities
+ services.playerctld.enable = true;
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
   };
 
 #  services.desktopManager.plasma6.enable = false;
@@ -157,9 +177,6 @@
    # no need to redefine it in your config for now)
    #media-session.enable = true;
  };
-
- # Enable touchpad support (enabled default in most desktopManager).
- # services.xserver.libinput.enable = true;
 
  # Define a user account. Don't forget to set a password with ‘passwd’.
  users.users.nhoxsang2411994 = {
@@ -210,7 +227,7 @@
    mpv-unwrapped
    protontricks
    tor-browser
-   protonvpn-gui
+   proton-vpn
    mangohud
    gamescope
    kdePackages.qtmultimedia
@@ -220,6 +237,8 @@
    krita
    libwacom
    xf86_input_wacom
+   yt-dlp
+   glib
    # customized flake packages:
  ];
 

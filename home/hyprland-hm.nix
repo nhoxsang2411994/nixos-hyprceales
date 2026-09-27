@@ -38,6 +38,7 @@
     wl-clipboard
     rofi
     swayimg
+    imv
     wev
     glib # Provides the 'gio' command
   ];

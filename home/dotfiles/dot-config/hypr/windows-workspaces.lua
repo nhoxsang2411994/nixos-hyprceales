@@ -3,26 +3,52 @@
 -- =========================================================================
 
 -- Brave's notification windows float rule
-hl.windowrule("match:class ^$,match:title ^$,match:float yes")
+hl.window_rule({
+    match = { class = "^$", title = "^$", float = true },
+    float = true
+})
 
 -- Ignore maximize requests from applications
-hl.windowrule("suppress_event maximize, match:class .*")
+hl.window_rule({
+    match = { class = ".*" },
+    suppress_event = "maximize"
+})
 
 -- Fix mouse dragging issues with XWayland instances
-hl.windowrule("no_focus 1,match:class ^$,match:title ^$,match:xwayland 1, match:float 1, match:fullscreen 0,match:pin 0")
+hl.window_rule({
+    match = {
+        class = "^$",
+        title = "^$",
+        xwayland = true,
+        float = true,
+        fullscreen = false,
+        pin = false -- FIXED: Changed 'pinned' to 'pin'
+    },
+    no_focus = true
+})
+
 
 -- fcitx input method windows layout optimization
-hl.windowrule("pseudo on, match:class fcitx")
+hl.window_rule({
+    match = { class = "fcitx" },
+    pseudo = true
+})
 
 -- swayimg picture viewer rules
-hl.windowrule("float on, match:class ^(swayimg)$")
-hl.windowrule("center on, match:class ^(swayimg)$")
-hl.windowrule("size 500 500, match:class ^(swayimg)$")
-hl.windowrule("animation slide, match:class ^(swayimg)$")
-hl.windowrule("opacity 0.95, match:class ^(swayimg)$")
+hl.window_rule({
+    match = { class = "^(swayimg)$" },
+               float = true,
+               center = true,
+               size = { 500, 500 },
+               animation = "slide",
+               opacity = 0.95
+})
 
 -- Persistent MPRIS cover art thumbnail layout
-hl.windowrule("pin on, match:title ^(mpris_thumb\\.png)$")
+hl.window_rule({
+    match = { title = "^(mpris_thumb\\.png)$" },
+               pin = true -- FIXED: Changed 'pinned = true' to 'pin = true'
+})
 
 
 -- =========================================================================

@@ -4,9 +4,14 @@ hl.config({
         gaps_out = 16,
         border_size = 1,
 
-        -- Hex/RGBA colors must be wrapped in explicit Lua quotes
-        ["col.active_border"] = "rgba(33ccffee) rgba(00ff99ee) 45deg",
-        ["col.inactive_border"] = "rgba(595959aa)",
+        -- FIXED GRADIENT SYNTAX
+        col = {
+            active_border = {
+                colors = { "rgba(33ccffee)", "rgba(00ff99ee)" },
+          angle = 45
+            },
+            inactive_border = "rgba(595959aa)"
+        },
 
         resize_on_border = true,
         allow_tearing = false,

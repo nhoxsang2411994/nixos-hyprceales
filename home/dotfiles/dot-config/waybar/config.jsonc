@@ -20,27 +20,19 @@
 		"workspace-taskbar": {
 			// Enable the workspace taskbar. Default: false
 			"enable": true,
-
 			// If true, the active/focused window will have an 'active' class. Could cause higher CPU usage due to more frequent redraws. Default: false
 			"update-active-window": true,
-
 			// Format of the windows in the taskbar. Default: "{icon}". Allowed variables: {icon}, {title}
 			"format": "{icon}{title:.6}",
-
 			// Icon size in pixels. Default: 16
 			"icon-size": 14,
-
 			// Either the name of an installed icon theme or an array of themes (ordered by priority). If not set, the default icon theme is used.
 			"icon-theme": "some_icon_theme",
-
 			// Orientation of the taskbar ("horizontal" or "vertical"). Default: "horizontal".
 			"orientation": "horizontal",
-
 			// List of regexes. A window will NOT be shown if its window class or title match one or more items. Default: []
 			//"ignore-list": [ "code", "Firefox - .*" ],
-
 			"on-click-window": "${XDG_CONFIG_HOME}/waybar/scripts/focus-or-close-window.sh {address} {button}",
-
 		},
 		"format-icons": {
 			"1": 1,
@@ -77,7 +69,7 @@
 	"custom/mpris-art": {
 	    "exec": "${XDG_CONFIG_HOME}/waybar/scripts/get_thumb.sh",
 		"format" : "",
-		"interval": 30 // How often to check for a new song/image
+		"interval": 15 // How often to check for a new song/image
 	},
 	"image#mpris-thumb": {
 		"path": "/tmp/mpris_thumb.png", // The best location is /tmp. Cannot access $HOME.
@@ -168,26 +160,27 @@
 		"interval" : 10,
 		"format": "{ifname}",
 		"format-wifi": "{essid} ({signalStrength}%) ",
-		"format-ethernet": "󰈀 {ifname}  {bandwidthDownBits}  {bandwidthUpBits}	",
-		"format-disconnected": "Disconnected", //An empty format will hide the module.
-		"tooltip-format": "{ifname} via {gwaddr} 󰊗",
+		"format-ethernet": "   {ifname}  {bandwidthDownBits}  {bandwidthUpBits} ", // FIXED: Replaced hidden tab with a normal space
+		"format-disconnected": "Disconnected",
+		"tooltip-format": "{ifname} via {gwaddr}   ",
 		"tooltip-format-wifi": "{essid} ({signalStrength}%) ",
 		"tooltip-format-ethernet": "{ifname} ",
 		"tooltip-format-disconnected": "Disconnected",
 		"max-length": 35
 	},
-	    "temperature": {
+	"temperature": {
         "thermal-zone": 2,
         "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 80,
         "format-critical": "{temperatureC}°C {icon}",
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", " thermometers"],
-        "interval": 10
+        "interval": 10,
+        "on-click": "ghostty -e btop"
     },
 	"memory": {
 		"interval": 5,
-		"format": "󰍛 {used:0.1f}G/{total:0.1f}G	",
+		"format": "󰍛 {used:0.1f}G/{total:0.1f}G ",
 		"max-length": 15
 	},
 	"systemd-failed-units": {
@@ -207,7 +200,7 @@
 			"reboot": "reboot",
 			"exit": "hyprctl dispatch exit",
 			"lock": "hyprlock",
-			"screenshot": "hyprshot -m region -o '$HOME/Pictures/Screenshot/' -- imv"
+			"screenshot": "hyprshot -m region -o $HOME/Pictures/Screenshot/ -- imv"
 		},
 	},
 	"custom/quit": {

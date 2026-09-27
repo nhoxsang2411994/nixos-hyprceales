@@ -1,9 +1,9 @@
 -- =========================================================================
 -- MODULE IMPORTS
 -- =========================================================================
--- Replacing the old "source =" commands with Lua's native require mechanism.
--- Note: Your external sub-configs MUST also be migrated to .lua files for
--- this setup to function properly without throwing compiler errors.
+local dotfilePath = "/home/nhoxsang2411994/.config/nixos/home/dotfiles/dot-config/hypr/"
+package.path = package.path .. ";" .. dotfilePath .. "?.lua"
+
 require("my-programs")
 require("autostart")
 require("keybindings")
@@ -13,21 +13,20 @@ require("animations")
 require("layout")
 
 -- =========================================================================
--- MONITORS
+-- MONITORS (FIXED SYNTAX)
 -- =========================================================================
--- See https://hypr.land
+-- The monitor method expects a single, raw layout configuration string.
+-- This matches your original: monitor=,preferred,auto,auto
 hl.monitor({
     output = "",
     mode = "preferred",
     position = "auto",
-    scale = "auto",
+    scale = 1 -- Scale factors must be a primitive numerical integer or float
 })
 
 -- =========================================================================
 -- ENVIRONMENT VARIABLES
 -- =========================================================================
--- Note: If you use UWSM (Universal Wayland Session Manager) on NixOS,
--- it is recommended to define environmental hooks inside your system config instead.
 hl.env("GDK_SCALE", "$scaling")
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
@@ -35,7 +34,6 @@ hl.env("HYPRCURSOR_SIZE", "24")
 -- =========================================================================
 -- INPUT CONFIGURATION
 -- =========================================================================
--- See https://hypr.land
 hl.config({
     input = {
         kb_layout = "us",
@@ -44,7 +42,6 @@ hl.config({
         kb_options = "grp:win_space_toggle",
         kb_rules = "",
 
-        -- Don't change window focus when moving mouse
         follow_mouse = 2,
         float_switch_override_focus = 0,
         follow_mouse_threshold = 1000,
@@ -55,19 +52,19 @@ hl.config({
         touchpad = {
             natural_scroll = true,
             scroll_factor = 0.3,
-            drag_3fg = true, -- Three-finger drag mapped to a true boolean value
+            drag_3fg = true,
         },
     },
 
     cursor = {
         inactive_timeout = 1,
+        no_warps = true,
     },
 })
 
 -- =========================================================================
 -- PER-DEVICE CONFIGURATION
 -- =========================================================================
--- See https://wiki.hypr.land/configuring/core/devices/
 hl.device({
     name = "epic-mouse-v1",
     sensitivity = -0.5,
